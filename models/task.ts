@@ -1,8 +1,17 @@
-const fs = require('fs').promises;
-const path = require('path');
+import fs from 'fs/promises';
+import path from 'path';
+
 const dataPath = path.join(__dirname, '../data/task.json');
 
-const readJSONFile = async () => {
+export interface Task {
+  id: string;
+  title: string;
+  description: string;
+  status: 'pending' | 'in-progress' | 'completed';
+  priority: 'low' | 'medium' | 'high';
+}
+
+const readJSONFile = async (): Promise<Task[]> => {
   try {
     const data = await fs.readFile(dataPath, 'utf-8');
     return JSON.parse(data);
@@ -12,7 +21,7 @@ const readJSONFile = async () => {
   }
 };
 
-const writeJSONFile = async (data) => {
+const writeJSONFile = async (data: Task[]): Promise<void> => {
   try {
     await fs.writeFile(dataPath, JSON.stringify(data, null, 2));
   } catch (error) {
@@ -20,22 +29,22 @@ const writeJSONFile = async (data) => {
   }
 };
 
-const getAllTasks = async () => {
+export const getAllTasks = async (): Promise<Task[]> => {
   return await readJSONFile();
 };
 
-const getTaskById = async (id) => {
+export const getTaskById = async (id: string): Promise<Task | undefined> => {
   const tasks = await readJSONFile();
   return tasks.find(task => task.id === id);
 };
 
-const addTask = async (task) => {
+export const addTask = async (task: Task): Promise<void> => {
   const tasks = await readJSONFile();
   tasks.push(task);
   await writeJSONFile(tasks);
 };
 
-const updateTask = async (id, updatedTask) => {
+export const updateTask = async (id: string, updatedTask: Partial<Task>): Promise<void> => {
   const tasks = await readJSONFile();
   const index = tasks.findIndex(task => task.id === id);
   if (index !== -1) {
@@ -44,16 +53,8 @@ const updateTask = async (id, updatedTask) => {
   }
 };
 
-const deleteTask = async (id) => {
+export const deleteTask = async (id: string): Promise<void> => {
   const tasks = await readJSONFile();
   const filteredTasks = tasks.filter(task => task.id !== id);
   await writeJSONFile(filteredTasks);
-};
-
-module.exports = {
-  getAllTasks,
-  getTaskById,
-  addTask,
-  updateTask,
-  deleteTask,
 };

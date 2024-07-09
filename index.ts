@@ -1,15 +1,18 @@
-require('dotenv').config();
-const express = require('express');
+import dotenv from 'dotenv';
+dotenv.config();
+
+import express, { Request, Response } from 'express';
+import routes from './routes';
+import { bodyParser, requestLogger } from './middlewares';
+
 const app = express();
-const routes = require('./routes');
-const { bodyParser, requestLogger } = require('./middlewares');
 
 // Middleware
 app.use(requestLogger);
 app.use(bodyParser);
 
 // Basic route
-app.get('/', (req, res) => {
+app.get('/', (req: Request, res: Response) => {
   res.send('Welcome to the Task Management API!');
 });
 
