@@ -1,7 +1,7 @@
 const userModel = require('./user');
-const productModel = require('./product');
+const taskModel = require('./task');
 
 module.exports = {
   userModel,
-  productModel,
+  taskModel,
 };

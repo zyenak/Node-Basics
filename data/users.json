@@ -1,14 +1,12 @@
 [
   {
-    "id": "1720438788302",
-    "username": "kamranzy",
-    "password": "password0987123",
-    "email": "kamranz@example.com"
+    "id": "1720523590046",
+    "username": "testuser",
+    "password": "$2a$10$.ensL5U83n91kapfPASPvOyfpDWh/W2QnIiRQE7zD3rvLlXvGAlyW"
   },
   {
-    "id": "1720503088816",
-    "username": "zyenak",
-    "password": "updatedPassword",
-    "email": "zyenakam@example.com"
+    "id": "1720523635363",
+    "username": "testuser2",
+    "password": "$2a$10$m3iHmkbaxW0LLX.U7DjMaesHWfH1wOixuVbdgP9jiamPFvwQ0KcuO"
   }
 ]

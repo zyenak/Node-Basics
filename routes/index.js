@@ -1,7 +1,9 @@
-const userRoutes = require('./user');
-const productRoutes = require('./product');
+const express = require('express');
+const router = express.Router();
+const authRoutes = require('./auth');
+const taskRoutes = require('./task');
 
-module.exports = {
-  userRoutes,
-  productRoutes,
-};
+router.use('/auth', authRoutes);
+router.use('/tasks', taskRoutes);
+
+module.exports = router;
