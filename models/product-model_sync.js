@@ -24,13 +24,26 @@ const addProduct = (product) => {
   writeJSONFile(products);
 };
 
-const updateProduct = (id, updatedProduct) => {
-  const products = readJSONFile();
+const updateProduct = async (id, updatedProduct) => {
+  const products = await readJSONFile();
   const index = products.findIndex(product => product.id === id);
   if (index !== -1) {
-    products[index] = { id, ...updatedProduct };
-    writeJSONFile(products);
+    products[index] = { ...products[index], ...updatedProduct };
+    await writeJSONFile(products);
+    return true;
   }
+  return false;
+};
+
+const patchProduct = async (id, updatedFields) => {
+  const products = await readJSONFile();
+  const index = products.findIndex(product => product.id === id);
+  if (index !== -1) {
+    products[index] = { ...products[index], ...updatedFields };
+    await writeJSONFile(products);
+    return true;
+  }
+  return false;
 };
 
 const deleteProduct = (id) => {

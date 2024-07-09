@@ -1,5 +1,5 @@
-const userController = require('./user-controller');
-const productController = require('./product-controller');
+const userController = require('./user');
+const productController = require('./product');
 
 module.exports = {
   userController,

@@ -1,5 +1,5 @@
-const userRoutes = require('./user-routes');
-const productRoutes = require('./product-routes');
+const userRoutes = require('./user');
+const productRoutes = require('./product');
 
 module.exports = {
   userRoutes,
