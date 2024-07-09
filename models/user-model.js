@@ -40,9 +40,22 @@ const updateUser = async (id, updatedUser) => {
   const users = await readJSONFile();
   const index = users.findIndex(user => user.id === id);
   if (index !== -1) {
-    users[index] = { ...users[index], ...updatedUser }; // Merge existing user data with updated user
+    users[index] = { ...users[index], ...updatedUser };
     await writeJSONFile(users);
+    return true; 
   }
+  return false; 
+};
+
+const patchUser = async (id, updatedFields) => {
+  const users = await readJSONFile();
+  const index = users.findIndex(user => user.id === id);
+  if (index !== -1) {
+    users[index] = { ...users[index], ...updatedFields };
+    await writeJSONFile(users);
+    return true;
+  }
+  return false;
 };
 
 const deleteUser = async (id) => {
@@ -56,5 +69,6 @@ module.exports = {
   getUserById,
   addUser,
   updateUser,
+  patchUser,
   deleteUser,
 };

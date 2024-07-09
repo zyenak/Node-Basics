@@ -36,13 +36,32 @@ const createUser = async (req, res) => { // Make createUser an async function
   }
 };
 
-const updateUser = async (req, res) => { // Make updateUser an async function
+const updateUser = async (req, res) => {
   try {
     const updatedUser = req.body;
-    await userModel.updateUser(req.params.id, updatedUser); // Await updateUser
-    res.json({ message: 'User updated' });
+    const success = await userModel.updateUser(req.params.id, updatedUser);
+    if (success) {
+      res.json({ message: 'User updated' });
+    } else {
+      res.status(404).json({ message: 'User not found' });
+    }
   } catch (error) {
     console.error('Error updating user:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+const patchUser = async (req, res) => {
+  try {
+    const updatedFields = req.body;
+    const success = await userModel.patchUser(req.params.id, updatedFields);
+    if (success) {
+      res.json({ message: 'User updated' });
+    } else {
+      res.status(404).json({ message: 'User not found' });
+    }
+  } catch (error) {
+    console.error('Error patching user:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 };
@@ -62,5 +81,6 @@ module.exports = {
   getUserById,
   createUser,
   updateUser,
+  patchUser,
   deleteUser,
 };
