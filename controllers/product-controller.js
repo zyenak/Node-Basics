@@ -38,10 +38,29 @@ const createProduct = async (req, res) => {
 const updateProduct = async (req, res) => {
   try {
     const updatedProduct = req.body;
-    await productModel.updateProduct(req.params.id, updatedProduct);
-    res.json({ message: 'Product updated' });
+    const success = await productModel.updateProduct(req.params.id, updatedProduct);
+    if (success) {
+      res.json({ message: 'Product updated' });
+    } else {
+      res.status(404).json({ message: 'Product not found' });
+    }
   } catch (error) {
     console.error('Error updating product:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+const patchProduct = async (req, res) => {
+  try {
+    const updatedFields = req.body;
+    const success = await productModel.patchProduct(req.params.id, updatedFields);
+    if (success) {
+      res.json({ message: 'Product updated' });
+    } else {
+      res.status(404).json({ message: 'Product not found' });
+    }
+  } catch (error) {
+    console.error('Error patching product:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 };
@@ -61,5 +80,6 @@ module.exports = {
   getProductById,
   createProduct,
   updateProduct,
+  patchProduct,
   deleteProduct,
 };

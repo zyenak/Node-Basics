@@ -39,9 +39,22 @@ const updateProduct = async (id, updatedProduct) => {
   const products = await readJSONFile();
   const index = products.findIndex(product => product.id === id);
   if (index !== -1) {
-    products[index] = { ...products[index], ...updatedProduct }; // Merge existing product data with updated product
+    products[index] = { ...products[index], ...updatedProduct };
     await writeJSONFile(products);
+    return true;
   }
+  return false;
+};
+
+const patchProduct = async (id, updatedFields) => {
+  const products = await readJSONFile();
+  const index = products.findIndex(product => product.id === id);
+  if (index !== -1) {
+    products[index] = { ...products[index], ...updatedFields };
+    await writeJSONFile(products);
+    return true;
+  }
+  return false;
 };
 
 const deleteProduct = async (id) => {
@@ -55,5 +68,6 @@ module.exports = {
   getProductById,
   addProduct,
   updateProduct,
+  patchProduct,
   deleteProduct,
 };
